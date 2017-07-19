@@ -4,11 +4,10 @@ define a transformation to register the overlapping portion
     of two aligned subvolumes
 '''
 import numpy
-import marshmallow as mm
 
 import renderapi
-from ..module.render_module import (
-    RenderModule, RenderParameters, OptionList)
+from ..module.render_module import RenderModule, RenderParameters
+from argschema.fields import OptionList, Str, Int
 
 example_parameters = {
     "render": {
@@ -88,15 +87,15 @@ class RegisterSubvolumeModule(RenderModule):
 
 
 class RegisterSubvolumeParameters(RenderParameters):
-    stack_a = mm.fields.Str(required=True, metadata={
+    stack_a = Str(required=True, metadata={
         'description': '"parent" stack to reman fixed'})
-    stack_b = mm.fields.Str(required=True, metadata={
+    stack_b = Str(required=True, metadata={
         'description': '"child" stack which moves to register to stack_a'})
     transform_type = OptionList(
         RegisterSubvolumeModule.transform_classes.keys(),
         required=False, default='RIGID', metadata={
             'description': 'Homography model to fit'})
-    pool_size = mm.fields.Int(required=False, default=1, metadata={
+    pool_size = Int(required=False, default=1, metadata={
         'description': 'multiprocessing pool size'})
 
 
